@@ -1,25 +1,61 @@
-import React from 'react';
-import logo from './logo.svg';
+import { Frames, CardNumber, ExpiryDate, Cvv } from 'frames-react';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <Frames
+                config={{
+                    debug: true,
+                    publicKey: 'pk_test_6e40a700-d563-43cd-89d0-f9bb17d35e73',
+                    modes: ['cvv_optional'],
+                    localization: {
+                        cardNumberPlaceholder: 'Card number',
+                        expiryMonthPlaceholder: 'MM',
+                        expiryYearPlaceholder: 'YY',
+                        cvvPlaceholder: 'CVV',
+                    },
+                    style: {
+                        base: {
+                            fontSize: '17px',
+                        },
+                    },
+                }}
+                ready={() => {}}
+                frameActivated={(e) => {}}
+                frameFocus={(e) => {}}
+                frameBlur={(e) => {}}
+                frameValidationChanged={(e) => {}}
+                paymentMethodChanged={(e) => {}}
+                cardValidationChanged={(e) => {}}
+                cardSubmitted={() => {}}
+                cardTokenized={(e) => {
+                    alert(e.token);
+                }}
+                cardTokenizationFailed={(e) => {}}
+                cardBinChanged={(e) => {}}
+            >
+              <div className="card-number">
+                <CardNumber />
+              </div>
+              <div className="date-and-code">
+                <ExpiryDate />
+                <Cvv />
+              </div>
+
+                {/* Or if you want to use single frames: */}
+                {/* <CardFrame /> */}
+
+                <button
+                    id="pay-button"
+                    onClick={() => {
+                        Frames.submitCard();
+                    }}
+                >
+                    PAY GBP 25.00
+                </button>
+            </Frames>
+        </div>
   );
 }
 
